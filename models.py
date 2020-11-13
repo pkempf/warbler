@@ -83,7 +83,7 @@ class User(db.Model):
         nullable=False,
     )
 
-    messages = db.relationship("Message")
+    messages = db.relationship("Message", backref="user", cascade="all, delete-orphan")
 
     followers = db.relationship(
         "User",
@@ -182,8 +182,6 @@ class Message(db.Model):
         db.ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
     )
-
-    user = db.relationship("User")
 
     def __lt__(self, other):
         """Overrides the less than method so that when sorted the newest message is first"""

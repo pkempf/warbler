@@ -371,7 +371,7 @@ def show_likes(user_id):
     messages = user.likes
     messages.sort()  # overriden such that newest message is first
 
-    return render_template("users/show.html", user=user, messages=messages)
+    return render_template("users/liked.html", user=user, messages=messages)
 
 
 ##############################################################################

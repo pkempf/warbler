@@ -117,7 +117,9 @@ class User(db.Model):
         return len(found_user_list) == 1
 
     @classmethod
-    def signup(cls, username, email, password, image_url):
+    def signup(
+        cls, username, email, password, image_url="/static/images/default-pic.png"
+    ):
         """Sign up user.
 
         Hashes password and adds user to system.
@@ -182,6 +184,11 @@ class Message(db.Model):
         db.ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
     )
+
+    def __repr__(self):
+        """Overrides __repr__ to return a representation of the message"""
+
+        return f"<Message #{self.id}: {self.text} | User {self.user_id} | {self.timestamp}>"
 
     def __lt__(self, other):
         """Overrides the less than method so that when sorted the newest message is first"""

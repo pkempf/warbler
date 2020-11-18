@@ -162,29 +162,25 @@ class UserModelTestCase(TestCase):
 
         # currently gives an "invalid salt" ValueError
 
-        user = User(
-            email="test@test.com", username="testuser", password="HASHED_PASSWORD"
+        user = User.signup(
+            email="test@test.com", username="testuser", password="PASSWORD"
         )
-        db.session.add(user)
         db.session.commit()
 
-        logged_in_user = User.authenticate(
-            username="testuser", password="HASHED_PASSWORD"
-        )
+        logged_in_user = User.authenticate(username="testuser", password="PASSWORD")
 
         self.assertEqual(user, logged_in_user)
 
     def test_authenticate_invalid_username(self):
         """Does User.authenticate fail when given a bad username?"""
 
-        user = User(
-            email="test@test.com", username="testuser", password="HASHED_PASSWORD"
+        user = User.signup(
+            email="test@test.com", username="testuser", password="PASSWORD"
         )
-        db.session.add(user)
         db.session.commit()
 
         logged_in_user = User.authenticate(
-            username="wrong_username", password="HASHED_PASSWORD"
+            username="wrong_username", password="PASSWORD"
         )
 
         self.assertFalse(logged_in_user)
@@ -194,10 +190,9 @@ class UserModelTestCase(TestCase):
 
         # currently gives an "invalid salt" ValueError
 
-        user = User(
-            email="test@test.com", username="testuser", password="HASHED_PASSWORD"
+        user = User.signup(
+            email="test@test.com", username="testuser", password="PASSWORD"
         )
-        db.session.add(user)
         db.session.commit()
 
         logged_in_user = User.authenticate(
